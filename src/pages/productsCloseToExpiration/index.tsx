@@ -2,21 +2,30 @@ import { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView, Text } from 'react-native';
 import colors from '../../../global/colors';
 import CardProduct from '../../components/cardProduct';
+import { api } from '../../config/api';
 
 import { useSettings } from '../../contexts/SettingsContext';
 
 export default function ProductsCloseToExpiration() {
-  const { productsToExpiration: products, findProductsCloseToExpiration } =
-    useSettings();
+  const [products, setProducts] = useState([]);
+
+  const setProductsExpiration = async () => {
+    await api
+      .get('/products/expiration')
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((error) => alert(error));
+  };
 
   useEffect(() => {
-    findProductsCloseToExpiration();
-  }, []);
+    setProductsExpiration();
+  }, [setProductsExpiration, products]);
 
   return (
     <ScrollView style={styles.page}>
       <View style={styles.content}>
-        {products.length > 0 &&
+        {products &&
           products.map((product: any, index: number) => (
             <CardProduct
               key={index}

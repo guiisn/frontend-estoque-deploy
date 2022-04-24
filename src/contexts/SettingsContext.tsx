@@ -68,7 +68,7 @@ export function SettingsProvider({ children }: any) {
     };
 
     await api
-      .post('/product', dataToSend)
+      .post('/create-product', dataToSend)
       .then(() => {
         alert('✔ Produto cadastrado com sucesso!');
         setBarcodeScanned('');
@@ -77,14 +77,10 @@ export function SettingsProvider({ children }: any) {
   }
 
   async function fetchBarcodeScanned(barcode: string) {
-    console.log(barcode);
-
     setBarcodeScanned(barcode);
   }
 
   async function sellProduct(barcode: string, qtd: string) {
-    console.log(barcode, qtd);
-
     await api
       .put(`/product/sell/${barcode}`, { qtd })
       .then(() => {

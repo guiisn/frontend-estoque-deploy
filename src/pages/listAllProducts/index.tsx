@@ -1,21 +1,29 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { StyleSheet, View, ScrollView } from 'react-native';
 import colors from '../../../global/colors';
 import CardProduct from '../../components/cardProduct';
-
-import { useSettings } from '../../contexts/SettingsContext';
+import { api } from '../../config/api';
 
 export default function ListAllProducts() {
-  const { listAllProducts, products } = useSettings();
+  const [products, setProducts] = useState([]);
+
+  const setAllProducts = async () => {
+    await api
+      .get('/all-products')
+      .then((response) => {
+        setProducts(response.data);
+      })
+      .catch((error) => alert(error));
+  };
 
   useEffect(() => {
-    listAllProducts();
-  }, [products]);
+    setAllProducts();
+  }, [products, setAllProducts]);
 
   return (
     <ScrollView style={styles.page}>
       <View style={styles.content}>
-        {products.length > 0 &&
+        {products &&
           products.map((product: any, index: number) => (
             <CardProduct
               key={index}

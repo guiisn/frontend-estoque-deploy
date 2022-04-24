@@ -2,11 +2,11 @@ import { StyleSheet } from 'react-native';
 import colors from './colors';
 
 export const globals = StyleSheet.create({
-  titles: { fontSize: 34, fontWeight: 'bold', color: colors.textsSecondary },
-  titles2: { fontSize: 34, fontWeight: 'bold', color: colors.texts },
-  subtitles: { fontSize: 30, fontWeight: 'bold', color: colors.textsSecondary },
+  titles: { fontSize: 24, fontWeight: '500', color: colors.textsSecondary },
+  titles2: { fontSize: 28, fontWeight: 'bold', color: colors.texts },
+  subtitles: { fontSize: 24, fontWeight: 'bold', color: colors.textsSecondary },
   subtitles2: {
-    fontSize: 30,
+    fontSize: 22,
     fontWeight: 'bold',
     color: colors.texts,
   },

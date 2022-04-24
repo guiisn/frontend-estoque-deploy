@@ -7,30 +7,27 @@ import { Entypo } from '@expo/vector-icons';
 import colors from '../../../global/colors';
 import { globals } from '../../../global/styles';
 
-import { useSettings } from '../../contexts/SettingsContext';
-
 import { humanizePrice } from '../../utils/functions';
+import { api } from '../../config/api';
 
 export default function Header() {
   const [eyeOpen, setEye] = useState(true);
-  // const [totalValue, setTotalValue] = useState('');
+  const [totalValue, setTotalValue] = useState('');
 
-  const { fetchTotalValue, totalValue } = useSettings();
+  const setInventoryTotalValue = async () => {
+    await api
+      .get('/inventory-value')
+      .then((response) => {
+        setTotalValue(response.data);
+      })
+      .catch((error) => {
+        alert(error);
+      });
+  };
 
   useEffect(() => {
-    fetchTotalValue();
-    console.log(totalValue);
-  }, [totalValue]);
-
-  // useEffect(() => {
-  //   async function SetTotalValue() {
-  //     const value = await fetchTotalValue();
-
-  //     setTotalValue(value);
-  //   }
-
-  //   SetTotalValue();
-  // }, [fetchTotalValue()]);
+    setInventoryTotalValue();
+  }, [setInventoryTotalValue, totalValue]);
 
   return (
     <View style={styles.header}>
@@ -40,7 +37,7 @@ export default function Header() {
           <TouchableOpacity onPress={() => setEye(!eyeOpen)}>
             <Entypo
               name={eyeOpen ? 'eye-with-line' : 'eye'}
-              size={32}
+              size={24}
               color={colors.textsSecondary}
             />
           </TouchableOpacity>
@@ -61,7 +58,7 @@ const styles = StyleSheet.create({
   header: {
     backgroundColor: colors.tertiary,
     width: '100%',
-    height: 250,
+    height: '35%',
     borderBottomLeftRadius: 10,
     borderBottomRightRadius: 10,
     shadowColor: '#000',
@@ -77,7 +74,7 @@ const styles = StyleSheet.create({
 
   value: {
     width: '90%',
-    backgroundColor: '#F98B4C',
+    backgroundColor: '#8F66C5',
     height: 116,
     borderRadius: 30,
     padding: 20,

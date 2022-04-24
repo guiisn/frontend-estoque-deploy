@@ -88,7 +88,7 @@ const styles = StyleSheet.create({
     display: 'flex',
     alignItems: 'center',
 
-    marginTop: 80,
+    marginTop: 20,
   },
   menuOptions: {
     width: '100%',
